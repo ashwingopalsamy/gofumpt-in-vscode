@@ -2,7 +2,7 @@
   "name": "gofumpt-in-vscode",
   "displayName": "gofumpt in vscode",
   "description": "use 'gofumpt' by mvdan, within vscode",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.94.0"
   },
@@ -12,7 +12,9 @@
     "url": "https://github.com/ashwingopalsamy/gofumpt-in-vscode.git"
   },
   "categories": [
-    "Other"
+    "Linters",
+    "Formatters",
+    "Programming Languages"
   ],
   "activationEvents": [
     "onLanguage:go"

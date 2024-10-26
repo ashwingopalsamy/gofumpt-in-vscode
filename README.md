@@ -13,6 +13,7 @@ To enable the extension, add the following to your `settings.json`:
 {
   "gofumptAutoFormatter.enable": true
 }
+```
 
 ## Disclaimer
 
