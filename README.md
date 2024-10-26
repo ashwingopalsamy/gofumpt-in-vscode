@@ -1,30 +1,56 @@
-# gofumpt in VSCode
+# gofumpt in vscode
+
+Automatically enable `gofumpt` formatting for Go files in VSCode by configuring the Go language server (`gopls`). This extension sets up the necessary settings to ensure that `gofumpt` is used for formatting your Go code whenever you save a file.
 
 ## Features
 
-- **Automatic Formatting**: Formats Go files with `gofumpt` automatically on save.
-- **Configuration Options**: Easily toggle formatting on or off.
+- Automatically configures VSCode settings to enable `gofumpt` formatting on save.
+- Sets `"go.useLanguageServer": true` to use the `gopls` language server.
+- Sets `"gopls.formatting.gofumpt": true` to enable `gofumpt` formatting.
+- Provides a command to manually re-enable `gofumpt` settings if needed.
 
-## Configuration
+## How It Works
 
-To enable the extension, add the following to your `settings.json`:
+When you install and enable the "gofumpt in vscode" extension, it automatically updates your workspace settings with the following configurations:
 
 ```json
 {
-  "gofumptAutoFormatter.enable": true
+  "go.useLanguageServer": true,
+  "gopls": {
+    "formatting.gofumpt": true
+  }
 }
 ```
 
-## Disclaimer
+These settings ensure that the `gopls` language server is used for Go development, with `gofumpt` enabled for formatting. The configuration is applied to your workspace settings, meaning it will only affect the current project.
 
-This extension simplifies the manual process of using `gofumpt` by automatically running it for each save. It does not modify, reuse, or overshadow the original tool `gofumpt` from [github.com/mvdan](https://github.com/mvdan/gofumpt).
+## Commands
 
-The original `gofumpt` tool is licensed under the BSD 3-Clause "New" or "Revised" License, which permits commercial use, modification, distribution, and private use. For more details, please refer to the [LICENSE](https://github.com/mvdan/gofumpt/blob/master/LICENSE) file.
+*Enable gofumpt Formatting:* Manually enable the `gofumpt` settings again if they were changed or disabled. Use the command palette (`Cmd+Shift+P` or `Ctrl+Shift+P`) and search for "Enable gofumpt Formatting"
+
+## Manual Configuration (Optional)
+
+If you prefer to manually set the configuration, add the following settings to your workspace's `settings.json`:
+
+```json
+{
+  "go.useLanguageServer": true,
+  "gopls": {
+    "formatting.gofumpt": true
+  }
+}
+```
+
+This will achieve the same effect as the extension.
+
+## Troubleshooting
+
+If you encounter any issues:
+
+- Make sure the Go extension for VSCode is installed and configured.
+- Ensure that gopls is properly installed and available on your system.
+- Verify that the "`go.useLanguageServer`" and "`gopls.formatting.gofumpt`" settings are enabled in your workspace settings.
 
 ## Contributing
 
-Contributions are welcome! If you have ideas for improvements or encounter issues, feel free to open issues or submit pull requests. Your input helps make this extension better for the community.
-
-## License
-
-This project is licensed under the GNU General Public License. See the LICENSE file for details.
+Contributions are welcome! Please feel free to submit a pull request or open an issue if you find a bug or have a feature request.
