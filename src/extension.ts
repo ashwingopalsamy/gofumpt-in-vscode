@@ -11,7 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(enableCommand);
 }
 
-function enableGofumpt() {
+export function enableGofumpt() {
   const goConfig = vscode.workspace.getConfiguration('go');
   const goplsConfig = vscode.workspace.getConfiguration('gopls');
 

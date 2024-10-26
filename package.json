@@ -2,7 +2,7 @@
   "name": "gofumpt-in-vscode",
   "displayName": "gofumpt in vscode",
   "description": "use 'gofumpt' by mvdan, within vscode",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "engines": {
     "vscode": "^1.94.0"
   },
