@@ -2,10 +2,11 @@
   "name": "gofumpt-in-vscode",
   "displayName": "gofumpt in vscode",
   "description": "use 'gofumpt' by mvdan, within vscode",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.94.0"
   },
+  "publisher":"ashwingopalsamy",
   "repository": {
     "type": "git",
     "url": "https://github.com/ashwingopalsamy/gofumpt-in-vscode.git"
@@ -57,5 +58,6 @@
   },
   "dependencies": {
     "glob": "^11.0.0"
-  }
+  },
+  "icon":"icon.png"
 }
