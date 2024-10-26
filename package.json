@@ -1,0 +1,61 @@
+{
+  "name": "gofumpt-in-vscode",
+  "displayName": "gofumpt in vscode",
+  "description": "use 'gofumpt' by mvdan, within vscode",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ashwingopalsamy/gofumpt-in-vscode.git"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:go"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gofumptAutoFormatter.format",
+        "title": "Format Go File with gofumpt"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "gofumptAutoFormatter.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/Disable gofumpt auto-format on save."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "compile": "tsc -p ./",
+    "lint": "eslint src",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.9",
+    "@types/node": "^20.17.1",
+    "@types/vscode": "^1.94.0",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.13.0",
+    "mocha": "^10.7.3",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "glob": "^11.0.0"
+  }
+}
