@@ -22,23 +22,23 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.run = run;
+const glob = require('glob');
 const path = __importStar(require("path"));
-const mocha_1 = __importDefault(require("mocha"));
-const glob_1 = require("glob");
+const Mocha = require('mocha');
 function run() {
-    const mocha = new mocha_1.default({
+    const mocha = new Mocha({
         ui: 'tdd',
         color: true
     });
     const testsRoot = path.resolve(__dirname, '..');
     return new Promise((resolve, reject) => {
-        (0, glob_1.glob)('**/**.test.js', { cwd: testsRoot }).then((files) => {
-            files.forEach((f) => mocha.addFile(path.resolve(testsRoot, f)));
+        glob('**/**.test.js', { cwd: testsRoot }, (err, files) => {
+            if (err) {
+                return reject(err);
+            }
+            files.forEach(f => mocha.addFile(path.resolve(testsRoot, f)));
             try {
                 mocha.run((failures) => {
                     if (failures > 0) {
@@ -52,6 +52,6 @@ function run() {
             catch (err) {
                 reject(err);
             }
-        }).catch((err) => reject(err));
+        });
     });
 }

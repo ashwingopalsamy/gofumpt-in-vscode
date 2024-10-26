@@ -1,34 +1,23 @@
 import * as vscode from 'vscode';
-import { exec } from 'child_process';
 
-function checkGofumptInstallation(): Promise<boolean> {
-   return new Promise((resolve) => {
-      exec('gofumpt -h', (error) => {
-         resolve(!error);
-      });
-   });
+export function activate(context: vscode.ExtensionContext) {
+  enableGofumpt();
+
+  const enableCommand = vscode.commands.registerCommand('gofumptFormatter.enableGofumpt', () => {
+    enableGofumpt();
+    vscode.window.showInformationMessage('gofumpt formatting has been enabled.');
+  });
+
+  context.subscriptions.push(enableCommand);
 }
 
-function formatDocument(document: vscode.TextDocument): void {
-   const terminal = vscode.window.createTerminal('gofumpt');
-   terminal.sendText(`gofumpt -w ${document.fileName}`);
-   terminal.dispose();
-}
+function enableGofumpt() {
+  const goConfig = vscode.workspace.getConfiguration('go');
+  const goplsConfig = vscode.workspace.getConfiguration('gopls');
 
-export async function activate(context: vscode.ExtensionContext) {
-   const isGofumptInstalled = await checkGofumptInstallation();
-   if (!isGofumptInstalled) {
-      vscode.window.showWarningMessage(
-         'gofumpt is not installed. Please install it by running: `go install mvdan.cc/gofumpt@latest`'
-      );
-      return;
-   }
-
-   vscode.workspace.onWillSaveTextDocument((event) => {
-      if (event.document.languageId === 'go' && vscode.workspace.getConfiguration('gofumptAutoFormatter').get('enable')) {
-         formatDocument(event.document);
-      }
-   });
+  goConfig.update('useLanguageServer', true, vscode.ConfigurationTarget.Global);
+  goplsConfig.update('formatting.gofumpt', true, vscode.ConfigurationTarget.Global);
 }
 
 export function deactivate() {}
+

@@ -22,44 +22,22 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = activate;
 exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
-const child_process_1 = require("child_process");
-function checkGofumptInstallation() {
-    return new Promise((resolve) => {
-        (0, child_process_1.exec)('gofumpt -h', (error) => {
-            resolve(!error);
-        });
-    });
-}
-function formatDocument(document) {
-    const terminal = vscode.window.createTerminal('gofumpt');
-    terminal.sendText(`gofumpt -w ${document.fileName}`);
-    terminal.dispose();
-}
 function activate(context) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const isGofumptInstalled = yield checkGofumptInstallation();
-        if (!isGofumptInstalled) {
-            vscode.window.showWarningMessage('gofumpt is not installed. Please install it by running: `go install mvdan.cc/gofumpt@latest`');
-            return;
-        }
-        vscode.workspace.onWillSaveTextDocument((event) => {
-            if (event.document.languageId === 'go' && vscode.workspace.getConfiguration('gofumptAutoFormatter').get('enable')) {
-                formatDocument(event.document);
-            }
-        });
+    enableGofumpt();
+    const enableCommand = vscode.commands.registerCommand('gofumptFormatter.enableGofumpt', () => {
+        enableGofumpt();
+        vscode.window.showInformationMessage('gofumpt formatting has been enabled.');
     });
+    context.subscriptions.push(enableCommand);
+}
+function enableGofumpt() {
+    const goConfig = vscode.workspace.getConfiguration('go');
+    const goplsConfig = vscode.workspace.getConfiguration('gopls');
+    goConfig.update('useLanguageServer', true, vscode.ConfigurationTarget.Global);
+    goplsConfig.update('formatting.gofumpt', true, vscode.ConfigurationTarget.Global);
 }
 function deactivate() { }
